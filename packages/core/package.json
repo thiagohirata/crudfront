@@ -1,7 +1,7 @@
 {
     "name": "@crudfront/core",
     "version": "1.0.0",
-    "main": "src/index.ts",
+    "main": "lib/index.js",
     "author": "Thiago Hirata",
     "license": "MIT",
     "devDependencies": {

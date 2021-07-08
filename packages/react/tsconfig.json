@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "lib": ["ES6", "DOM"],
+        "outDir": "lib",
+        "jsx": "react",
+        "declaration": true,
+        "esModuleInterop": true,
+        "allowJs": true,
+        "skipLibCheck": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts", "**/*.stories.ts*"]
+}

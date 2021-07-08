@@ -1,0 +1,10 @@
+{
+  "name": "@crudfront/util",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "author": "Thiago Hirata",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
+}

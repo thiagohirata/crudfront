@@ -1,0 +1,29 @@
+{
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100,
+    "overrides": [
+        {
+            "files": "*.yml",
+            "options": {
+                "tabWidth": 2,
+                "quoteProps": "consistent",
+                "singleQuote": false
+            }
+        },
+        {
+            "files": "package.json",
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": [
+                "*.ts",
+                "*.tsx"
+            ]
+        }
+    ]
+}
