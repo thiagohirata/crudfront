@@ -11,7 +11,13 @@ type Props = React.PropsWithChildren<{
 const Root = function (props: Props): JSX.Element {
   const theme = useMemo(() => {
     const localization = props?.locale?.materialUiLocalization;
-    return createTheme({}, localization);
+    return createTheme({
+      props: {
+        MuiTextField: {
+          variant: "outlined"
+        }
+      }
+    }, localization);
   }, [props?.locale?.materialUiLocalization]);
   return (
     <ThemeProvider theme={theme}>

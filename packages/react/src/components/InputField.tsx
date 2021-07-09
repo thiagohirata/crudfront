@@ -2,12 +2,13 @@ import React from 'react'
 import type { Type, Field } from '@crudfront/core'
 import InputDate from './InputDate'
 import InputText from './InputText'
+import InputObject from './InputObject'
 
 interface InputProps<V> {
-  value: V
-  setValue: { (v: V) }
-  disabled?: boolean
-  required?: boolean
+  value: V;
+  setValue: { (v: V) };
+  disabled?: boolean;
+  required?: boolean;
 }
 
 export type Props<T> = Pick<
@@ -27,10 +28,13 @@ const InputField = function <T>(props: Props<T>): JSX.Element {
     case 'date':
       Comp = InputDate
       break
+    case 'object':
+      Comp = InputObject
+      break
     default:
       Comp = null
   }
-  const compProps = {...props}
+  const compProps = { ...props }
   delete compProps['type']
 
   if (Comp) return <Comp {...compProps} />

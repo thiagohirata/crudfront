@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from "react";
-import { KeyboardDatePicker } from "@material-ui/pickers";
-import { useI18nContext } from "../context/I18nContext";
-import parseISO from "date-fns/parseISO";
-import isValid from "date-fns/isValid";
+import React, { useCallback, useState, useMemo } from 'react'
+import { KeyboardDatePicker, KeyboardDatePickerProps } from '@material-ui/pickers'
+import { useI18nContext } from '../context/I18nContext'
+import parseISO from 'date-fns/parseISO'
+import isValid from 'date-fns/isValid'
 
 interface InputProps<V> {
   value: V;
@@ -11,43 +11,49 @@ interface InputProps<V> {
   required?: boolean;
 }
 
-export type Props = {
+export type Props = Pick<
+  KeyboardDatePickerProps,
+  'label' | 'required' | 'disabled' | 'placeholder' | 'fullWidth' | 'size'
+> & {
   label: string;
-  min?: Date;
-} & InputProps<string>;
+  min: string;
+  max: string;
+} & InputProps<string>
 
 const InputText = (props: Props): JSX.Element => {
-  const { setValue } = props;
-  const propValueDate = props.value ? parseISO(props.value) : null;
-  const [v, setV] = useState<Date>(propValueDate);
+  const { setValue, max, min, value } = props
+  const { label, required, disabled, placeholder, fullWidth, size } = props
+
+  const maxDate = useMemo(() => (max ? parseISO(max) : undefined), [max])
+  const minDate = useMemo(() => (min ? parseISO(min) : undefined), [min])
+  const propValueDate = useMemo(() => (value ? parseISO(value) : null), [value])
+  const [v, setV] = useState<Date>(propValueDate)
   const onChange = useCallback(
     (v: Date) => {
       // setValue(date);
-      setV(v);
+      setV(v)
       if (isValid(v)) {
-        setValue(v.toISOString().substring(0, 10));
+        setValue(v.toISOString().substring(0, 10))
       } else {
-        setValue(null);
+        setValue(null)
       }
     },
     [setValue]
-  );
+  )
 
-  const i18n = useI18nContext();
-  const pickerProps = { ...props };
-  delete pickerProps["setValue"];
-  delete pickerProps["value"];
+  const i18n = useI18nContext()
   return (
     <>
       <KeyboardDatePicker
-        {...pickerProps}
+        {...{ label, required, disabled, placeholder, fullWidth, size }}
+        {...{ minDate, maxDate }}
         value={isValid(propValueDate) ? propValueDate : v}
         onChange={onChange}
         format={i18n.shortDateFormat}
         invalidDateMessage={i18n.invalidDateMessage}
       />
     </>
-  );
-};
+  )
+}
 
-export default InputText;
+export default InputText

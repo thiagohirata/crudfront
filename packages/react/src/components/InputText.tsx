@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import TextField from '@material-ui/core/TextField'
+import TextField, { TextFieldProps } from '@material-ui/core/TextField'
 import { maskValue, unmaskValue } from '@crudfront/util/lib/mask'
 // interface Option<T> {
 //   value: T;
@@ -8,12 +8,11 @@ import { maskValue, unmaskValue } from '@crudfront/util/lib/mask'
 // }
 
 export type Props<T = string> = Pick<
-  React.AllHTMLAttributes<HTMLInputElement>,
-  'required' | 'disabled' | 'pattern' | 'placeholder'
+  TextFieldProps,
+  'label' | 'required' | 'disabled' | 'placeholder' | 'fullWidth' | 'size' | 'multiline'
 > & {
   value?: T;
   setValue?: { (v: T) };
-  label?: string;
   mask?: string;
   hint?: string;
   // allCaps?: boolean;
@@ -25,12 +24,13 @@ export type Props<T = string> = Pick<
 }
 
 const InputText = (props: Props): JSX.Element => {
-  const { setValue, mask, value, label, pattern, required, disabled, placeholder, hint } = props
+  const { setValue, mask, value, hint } = props
+  const { label, required, disabled, placeholder, fullWidth, size, multiline } = props
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       e?.preventDefault?.()
       const value = e?.currentTarget?.value
-      if(mask) {
+      if (mask) {
         //todo salvar a seleção
       }
       const realValue = value == null ? null : mask ? maskValue(value, mask) : value
@@ -44,11 +44,13 @@ const InputText = (props: Props): JSX.Element => {
   return (
     <TextField
       {...{
-        pattern,
+        label,
         required,
         disabled,
         placeholder,
-        label,
+        fullWidth,
+        size,
+        multiline,
       }}
       value={inputValue}
       helperText={hint}
